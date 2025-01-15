@@ -2,8 +2,7 @@ package com.malek.toiletesparis.domain.models
 
 data class PublicToilet(
     val address: String,
-    val latitude: Double?,
-    val longitude: Double?,
+    val latLong: Pair<Double, Double>?,
     val hours: String?,
     val servicesAvailable: List<Service>,
     val equipmentInfoUrl: String?
