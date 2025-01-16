@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">ToiletesParis</string>
+    <string name="app_name">PublicToiletsParis</string>
+    <string name="baby_rely_message">✅ Équipement bébé</string>
+    <string name="prm_access_message">✅ Accessible handicapé</string>
+    <string name="adresse_public_toilet">Adresse : %1$s</string>
+    <string name="services_tilte">Services :</string>
+    <string name="open_maps_cta">Obtenir l\'itinéraire</string>
 </resources>

@@ -1,6 +1,6 @@
 package com.malek.toiletesparis.domain
 
-import com.malek.toiletesparis.domain.models.PublicToilet
+import com.malek.toiletesparis.domain.models.PublicToiletListPageResult
 import javax.inject.Inject
 
 
@@ -9,7 +9,7 @@ class GetPublicToiletsUseCase @Inject constructor(
 ) {
     suspend fun getPublicToiletsByQuery(
         query: Query
-    ): Result<List<PublicToilet>> {
+    ): Result<PublicToiletListPageResult> {
         return publicToiletRepository.getPublicToilets(query)
     }
 }
