@@ -14,54 +14,40 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LargeTopAppBar
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.capitalize
-import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.malek.toiletesparis.R
-import com.malek.toiletesparis.domain.models.PublicToilet
 import com.malek.toiletesparis.domain.models.Service
+import com.malek.toiletesparis.ui.shared.EmptyState
+import com.malek.toiletesparis.ui.shared.FullScreenLoader
 import com.malek.toiletesparis.ui.theme.ToiletesParisTheme
-import com.malek.toiletesparis.utils.OnBottomReached
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -84,7 +70,6 @@ class PublicToiletsListActivity : ComponentActivity() {
             }
 
             else -> {
-                Timber.e("Permisson refused")
                 viewModel.updateCurrentLocationRefused(currentLocationRefused = true)
             }
         }
@@ -99,7 +84,6 @@ class PublicToiletsListActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             val state by viewModel.state.collectAsStateWithLifecycle()
-            val lazyListState = rememberLazyListState()
             val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
             ToiletesParisTheme {
                 Scaffold(modifier = Modifier
@@ -165,77 +149,37 @@ class PublicToiletsListActivity : ComponentActivity() {
                                 } else {
                                     CircularProgressIndicator()
                                 }
-
                             }
                         }
 
                     }) { innerPadding ->
-                    if (state.isLoading && state.publicToiletsFetched.isEmpty()) {
-                        Box(
-                            modifier = Modifier
-                                .padding(innerPadding)
-                                .fillMaxSize(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            CircularProgressIndicator()
-                        }
-                    } else {
-                        if (state.publicToiletsFetched.isEmpty()) {
-                            Box(
-                                modifier = Modifier
-                                    .padding(innerPadding)
-                                    .fillMaxSize(),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Text(
-                                    stringResource(R.string.empty_list_result_message)
-                                )
-                            }
-
+                    Surface(
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                    ) {
+                        if (state.isLoading && state.publicToiletsFetched.isEmpty()) {
+                            FullScreenLoader()
                         } else {
-                            LazyColumn(
-                                Modifier
-                                    .padding(innerPadding)
-                                    .fillMaxSize(),
-                                state = lazyListState,
-                                verticalArrangement = Arrangement.spacedBy(16.dp),
-                                contentPadding = PaddingValues(8.dp)
-                            ) {
-                                items(
-                                    state.publicToiletsFetched,
-                                    key = {
-                                        it.id
+                            if (state.publicToiletsFetched.isEmpty()) {
+                                EmptyState()
+                            } else {
+                                PublicToiletsListScreen(
+                                    modifier = Modifier.fillMaxSize(),
+                                    publicToiletsFetched = state.publicToiletsFetched,
+                                    isLoading = state.isLoading,
+                                    openMaps = { latLong, label ->
+                                        openMaps(latLong = latLong, label = label)
+                                    },
+                                    requestNextPage = {
+                                        viewModel.requestNextPage()
                                     }
-                                ) { publicToilet ->
-                                    PublicToiletItemCompose(
-                                        modifier = Modifier
-                                            .fillMaxSize(),
-                                        publicToilet
-                                    ) { latLong, label ->
-                                        openMaps(latLong, label)
-                                    }
-                                }
-                                if (state.isLoading) {
-                                    item {
-                                        Box(
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .padding(16.dp),
-                                            contentAlignment = Alignment.Center
-                                        ) {
-                                            CircularProgressIndicator()
-                                        }
-                                    }
-                                }
-
+                                )
                             }
                         }
                     }
-                }
-                lazyListState.OnBottomReached {
-                    viewModel.requestNextPage()
-                }
 
+                }
             }
         }
     }
@@ -281,56 +225,6 @@ class PublicToiletsListActivity : ComponentActivity() {
     }
 }
 
-
-@Composable
-fun PublicToiletItemCompose(
-    modifier: Modifier = Modifier,
-    toilet: PublicToilet,
-    onNavigateClick: (Pair<Double, Double>, String) -> Unit
-) {
-    Card(modifier = modifier) {
-        Column(
-            Modifier
-                .fillMaxSize()
-                .padding(8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            Text(
-                text = toilet.address.capitalize(
-                    Locale.current
-                ),
-                style = MaterialTheme.typography.bodyLarge
-            )
-            Text(
-                text = stringResource(
-                    R.string.open_hours,
-                    toilet.hours ?: stringResource(R.string.open_hours_unavailable)
-                ),
-                style = MaterialTheme.typography.bodyMedium,
-            )
-
-            if (toilet.servicesAvailable.isNotEmpty()) {
-                Text(
-                    text = stringResource(R.string.services_title),
-                    style = MaterialTheme.typography.bodyMedium
-                )
-                toilet.servicesAvailable.forEach { service ->
-                    val serviceText = when (service) {
-                        Service.BABY_RELY -> stringResource(R.string.baby_rely_message)
-                        Service.PRM_ACCESS -> stringResource(R.string.prm_access_message)
-                    }
-                    Text(text = serviceText)
-                }
-            }
-            Spacer(modifier = Modifier.height(8.dp))
-            if (toilet.latLong != null) {
-                Button(onClick = { onNavigateClick(toilet.latLong, toilet.address) }) {
-                    Text(text = stringResource(R.string.open_maps_cta))
-                }
-            }
-        }
-    }
-}
 
 @StringRes
 fun Service.getLabel(): Int {
