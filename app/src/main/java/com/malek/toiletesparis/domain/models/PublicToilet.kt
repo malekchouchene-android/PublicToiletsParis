@@ -17,5 +17,5 @@ data class PublicToiletListPageResult(
 )
 
 enum class Service {
-    BABY_RELY, PRM_ACCESS
+    PRM_ACCESS, BABY_RELY
 }

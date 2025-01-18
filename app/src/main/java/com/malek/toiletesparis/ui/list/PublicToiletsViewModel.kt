@@ -6,6 +6,7 @@ import com.malek.toiletesparis.di.BackgroundDispatcher
 import com.malek.toiletesparis.domain.GetPublicToiletsUseCase
 import com.malek.toiletesparis.domain.Query
 import com.malek.toiletesparis.domain.models.PublicToilet
+import com.malek.toiletesparis.domain.models.Service
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +17,6 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -38,11 +38,21 @@ class PublicToiletsListViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             withContext(backgroundDispatcher) {
-                query.onEach {
+                query.onEach { localQuery ->
                     _state.update {
-                        it.copy(
-                            isLoading = true
-                        )
+                        if (localQuery.firstIndex == 0) {
+                            initialState(
+                                locationMode = localQuery.latLong != null,
+                                listOfServiceSelected = localQuery.services,
+                            )
+                        } else {
+                            it.copy(
+                                isLoading = true,
+                                locationMode = localQuery.latLong != null,
+                                listOfServiceSelected = localQuery.services,
+                                error = null
+                            )
+                        }
                     }
                 }.map {
                     useCase.getPublicToiletsByQuery(
@@ -57,12 +67,12 @@ class PublicToiletsListViewModel @Inject constructor(
                         val totalFetched =
                             lastState.totalFetched + publicToiletListPageResult.pageSize
                         _state.update {
-                            PublicToiletsListState(
+                            it.copy(
                                 publicToiletsFetched = newList,
                                 isLoading = false,
                                 error = null,
                                 totalFetched = totalFetched,
-                                endReached = totalFetched == publicToiletListPageResult.totalNumber
+                                endReached = totalFetched == publicToiletListPageResult.totalNumber,
                             )
                         }
                     }.onFailure { throwable ->
@@ -81,10 +91,78 @@ class PublicToiletsListViewModel @Inject constructor(
     fun requestNextPage() {
         if (state.value.endReached || state.value.isLoading) return
         viewModelScope.launch {
-            Timber.e("firstIndex ${_state.value.totalFetched}")
             query.update {
                 it.copy(
                     firstIndex = _state.value.totalFetched,
+                )
+            }
+        }
+    }
+
+    fun onCurrentLocationFetching() {
+        viewModelScope.launch {
+            _state.update {
+                it.copy(
+                    currentLocationFetching = true,
+                )
+            }
+        }
+    }
+
+    fun onCurrentLocationFetched(latLong: Pair<Double, Double>?) {
+        viewModelScope.launch {
+            _state.update {
+                it.copy(
+                    currentLocationFetching = false,
+                    currentLocationRefused = false
+                )
+            }
+            if (query.value.latLong != latLong) {
+                query.update {
+                    it.copy(
+                        latLong = latLong,
+                        firstIndex = 0,
+                    )
+                }
+            }
+        }
+    }
+
+    fun updateCurrentLocationRefused(currentLocationRefused: Boolean) {
+        viewModelScope.launch {
+            _state.update {
+                it.copy(
+                    currentLocationRefused = currentLocationRefused,
+                    currentLocationFetching = false
+                )
+            }
+        }
+    }
+
+
+    fun toggleService(service: Service) {
+        viewModelScope.launch(backgroundDispatcher) {
+            val serviceSelected = state.value.listOfServiceSelected.toMutableList()
+            if (serviceSelected.any { it == service }) {
+                serviceSelected.remove(service)
+            } else {
+                serviceSelected.add(service)
+            }
+            query.update {
+                it.copy(
+                    firstIndex = 0,
+                    services = serviceSelected
+                )
+            }
+        }
+    }
+
+    fun resetLocation() {
+        viewModelScope.launch {
+            query.update {
+                it.copy(
+                    latLong = null,
+                    firstIndex = 0,
                 )
             }
         }
@@ -98,13 +176,22 @@ data class PublicToiletsListState(
     val error: Throwable?,
     val endReached: Boolean,
     val totalFetched: Int,
+    val currentLocationFetching: Boolean = false,
+    val currentLocationRefused: Boolean? = null,
+    val listOfServiceSelected: List<Service> = emptyList(),
+    val locationMode: Boolean = false
 )
 
-private fun initialState(): PublicToiletsListState =
+private fun initialState(
+    locationMode: Boolean = false,
+    listOfServiceSelected: List<Service> = emptyList(),
+): PublicToiletsListState =
     PublicToiletsListState(
         publicToiletsFetched = emptyList(),
         isLoading = true,
         error = null,
         totalFetched = 0,
-        endReached = false
+        endReached = false,
+        locationMode = locationMode,
+        listOfServiceSelected = listOfServiceSelected
     )
