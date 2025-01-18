@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.malek.toiletesparis.domain.models.PublicToilet
+import com.malek.toiletesparis.ui.shared.ErrorState
 import com.malek.toiletesparis.utils.OnBottomReached
 
 @Composable
@@ -22,6 +23,8 @@ fun PublicToiletsListScreen(
     modifier: Modifier = Modifier,
     publicToiletsFetched: List<PublicToilet>,
     isLoading: Boolean,
+    error: Throwable?,
+    onRetry: () -> Unit,
     openMaps: (Pair<Double, Double>, String) -> Unit,
     requestNextPage: () -> Unit
 ) {
@@ -47,7 +50,7 @@ fun PublicToiletsListScreen(
             }
         }
         if (isLoading) {
-            item {
+            item("Loading") {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -55,6 +58,13 @@ fun PublicToiletsListScreen(
                     contentAlignment = Alignment.Center
                 ) {
                     CircularProgressIndicator()
+                }
+            }
+        }
+        if (error != null) {
+            item("error") {
+                ErrorState(modifier = Modifier.fillMaxWidth()) {
+                    onRetry()
                 }
             }
         }

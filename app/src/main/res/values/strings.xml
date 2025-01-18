@@ -9,4 +9,6 @@
     <string name="around_user_filter">À proximité</string>
     <string name="open_hours">Horaires : %1$s</string>
     <string name="open_hours_unavailable">Non spécifié</string>
+    <string name="error_message">Une erreur est survenue</string>
+    <string name="retry">Réessayer</string>
 </resources>

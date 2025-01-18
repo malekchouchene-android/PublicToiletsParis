@@ -46,6 +46,7 @@ import com.google.android.gms.location.LocationServices
 import com.malek.toiletesparis.R
 import com.malek.toiletesparis.domain.models.Service
 import com.malek.toiletesparis.ui.shared.EmptyState
+import com.malek.toiletesparis.ui.shared.ErrorState
 import com.malek.toiletesparis.ui.shared.FullScreenLoader
 import com.malek.toiletesparis.ui.theme.ToiletesParisTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -86,9 +87,10 @@ class PublicToiletsListActivity : ComponentActivity() {
             val state by viewModel.state.collectAsStateWithLifecycle()
             val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
             ToiletesParisTheme {
-                Scaffold(modifier = Modifier
-                    .fillMaxSize()
-                    .nestedScroll(scrollBehavior.nestedScrollConnection),
+                Scaffold(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .nestedScroll(scrollBehavior.nestedScrollConnection),
                     topBar = {
                         LargeTopAppBar(
                             modifier = Modifier
@@ -152,7 +154,8 @@ class PublicToiletsListActivity : ComponentActivity() {
                             }
                         }
 
-                    }) { innerPadding ->
+                    },
+                ) { innerPadding ->
                     Surface(
                         modifier = Modifier
                             .padding(innerPadding)
@@ -162,7 +165,14 @@ class PublicToiletsListActivity : ComponentActivity() {
                             FullScreenLoader()
                         } else {
                             if (state.publicToiletsFetched.isEmpty()) {
-                                EmptyState()
+                                if (state.error == null) {
+                                    EmptyState()
+                                } else {
+                                    ErrorState(Modifier.fillMaxSize()) {
+                                        viewModel.retry()
+                                    }
+                                }
+
                             } else {
                                 PublicToiletsListScreen(
                                     modifier = Modifier.fillMaxSize(),
@@ -171,8 +181,12 @@ class PublicToiletsListActivity : ComponentActivity() {
                                     openMaps = { latLong, label ->
                                         openMaps(latLong = latLong, label = label)
                                     },
+                                    error = state.error,
                                     requestNextPage = {
                                         viewModel.requestNextPage()
+                                    },
+                                    onRetry = {
+                                        viewModel.retry()
                                     }
                                 )
                             }
