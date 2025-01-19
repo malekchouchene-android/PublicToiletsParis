@@ -1,8 +1,7 @@
-package com.malek.toiletesparis.data.di
+package com.malek.data.di
 
-import android.app.Application
 import android.content.Context
-import com.malek.toiletesparis.data.api.ParisDataApi
+import com.malek.data.api.ParisDataApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

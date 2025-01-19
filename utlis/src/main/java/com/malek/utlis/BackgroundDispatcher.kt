@@ -1,4 +1,4 @@
-package com.malek.toiletesparis.di
+package com.malek.utlis
 
 import dagger.Module
 import dagger.Provides

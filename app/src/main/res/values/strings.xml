@@ -4,7 +4,7 @@
     <string name="prm_access_message">Accessible handicapé</string>
     <string name="address_public_toilet">Adresse : %1$s</string>
     <string name="services_title">Services :</string>
-    <string name="open_maps_cta">Obtenir l\'itinéraire</string>
+    <string name="open_maps_cta">Voir sur la carte</string>
     <string name="empty_list_result_message">"Pas de Toilettes dans le secteur "</string>
     <string name="around_user_filter">À proximité</string>
     <string name="open_hours">Horaires : %1$s</string>

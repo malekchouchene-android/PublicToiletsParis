@@ -1,20 +1,20 @@
-package com.malek.toiletesparis.data.api.dto
+package com.malek.data.api.dto
 
-import com.malek.toiletesparis.domain.models.PublicToilet
-import com.malek.toiletesparis.domain.models.Service
+import com.malek.domain.models.PublicToilet
+import com.malek.domain.models.Service
 
 fun RecordDto.toPublicToilet(): PublicToilet? {
     return if (this.recordId == null || this.fields?.adresse == null) {
         null
     } else {
-        val services = mutableListOf<Service>()
+        val services = mutableListOf<com.malek.domain.models.Service>()
         if (this.fields.prmAccess == Yes) {
-            services.add(Service.PRM_ACCESS)
+            services.add(com.malek.domain.models.Service.PRM_ACCESS)
         }
         if (this.fields.babyRely == Yes) {
-            services.add(Service.BABY_RELY)
+            services.add(com.malek.domain.models.Service.BABY_RELY)
         }
-        PublicToilet(
+        com.malek.domain.models.PublicToilet(
             id = this.recordId,
             address = "${this.fields.adresse}, ${this.fields.arrondissement} ",
             hours = this.fields.horaire,

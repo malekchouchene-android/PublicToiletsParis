@@ -44,7 +44,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.malek.toiletesparis.R
-import com.malek.toiletesparis.domain.models.Service
 import com.malek.toiletesparis.ui.shared.EmptyState
 import com.malek.toiletesparis.ui.shared.ErrorState
 import com.malek.toiletesparis.ui.shared.FullScreenLoader
@@ -115,7 +114,7 @@ class PublicToiletsListActivity : ComponentActivity() {
                                                 viewModel.resetLocation()
                                             })
                                         }
-                                        for (service in Service.entries) {
+                                        for (service in com.malek.domain.models.Service.entries) {
                                             FilterChip(
                                                 selected = service in state.listOfServiceSelected,
                                                 label = {
@@ -241,9 +240,9 @@ class PublicToiletsListActivity : ComponentActivity() {
 
 
 @StringRes
-fun Service.getLabel(): Int {
+fun com.malek.domain.models.Service.getLabel(): Int {
     return when (this) {
-        Service.BABY_RELY -> R.string.baby_rely_message
-        Service.PRM_ACCESS -> R.string.prm_access_message
+        com.malek.domain.models.Service.BABY_RELY -> R.string.baby_rely_message
+        com.malek.domain.models.Service.PRM_ACCESS -> R.string.prm_access_message
     }
 }

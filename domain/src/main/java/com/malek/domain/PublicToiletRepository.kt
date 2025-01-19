@@ -1,9 +1,7 @@
-package com.malek.toiletesparis.domain
+package com.malek.domain
 
-import com.malek.toiletesparis.domain.models.PublicToilet
-import com.malek.toiletesparis.domain.models.PublicToiletListPageResult
-import com.malek.toiletesparis.domain.models.Service
-import okhttp3.internal.cache2.Relay
+import com.malek.domain.models.PublicToiletListPageResult
+import com.malek.domain.models.Service
 
 interface PublicToiletRepository {
     suspend fun getPublicToilets(

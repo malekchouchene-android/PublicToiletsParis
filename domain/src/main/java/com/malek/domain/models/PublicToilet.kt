@@ -1,4 +1,4 @@
-package com.malek.toiletesparis.domain.models
+package com.malek.domain.models
 
 data class PublicToilet(
     val id: String,

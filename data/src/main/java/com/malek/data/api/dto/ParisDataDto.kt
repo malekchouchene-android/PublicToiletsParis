@@ -1,4 +1,4 @@
-package com.malek.toiletesparis.data.api.dto
+package com.malek.data.api.dto
 
 import com.google.gson.annotations.SerializedName
 
@@ -23,7 +23,7 @@ data class FieldsDto(
     @SerializedName("source") val source: String?,
     @SerializedName("gestionnaire") val gestionnaire: String?,
     @SerializedName("adresse") val adresse: String?,
-    @SerializedName("url_fiche_equipement") val equipmentInfoUrl:String?,
+    @SerializedName("url_fiche_equipement") val equipmentInfoUrl: String?,
 )
 
 

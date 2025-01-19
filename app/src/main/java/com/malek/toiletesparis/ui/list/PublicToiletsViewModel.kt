@@ -2,11 +2,9 @@ package com.malek.toiletesparis.ui.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.malek.toiletesparis.di.BackgroundDispatcher
-import com.malek.toiletesparis.domain.GetPublicToiletsUseCase
-import com.malek.toiletesparis.domain.Query
-import com.malek.toiletesparis.domain.models.PublicToilet
-import com.malek.toiletesparis.domain.models.Service
+import com.malek.domain.GetPublicToiletsUseCase
+import com.malek.domain.Query
+import com.malek.utlis.BackgroundDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Job
@@ -145,7 +143,7 @@ class PublicToiletsListViewModel @Inject constructor(
     }
 
 
-    fun toggleService(service: Service) {
+    fun toggleService(service: com.malek.domain.models.Service) {
         viewModelScope.launch(backgroundDispatcher) {
             val serviceSelected = state.value.listOfServiceSelected.toMutableList()
             if (serviceSelected.any { it == service }) {
@@ -181,20 +179,20 @@ class PublicToiletsListViewModel @Inject constructor(
 
 
 data class PublicToiletsListState(
-    val publicToiletsFetched: List<PublicToilet>,
+    val publicToiletsFetched: List<com.malek.domain.models.PublicToilet>,
     val isLoading: Boolean,
     val error: Throwable?,
     val endReached: Boolean,
     val totalFetched: Int,
     val currentLocationFetching: Boolean = false,
     val currentLocationRefused: Boolean? = null,
-    val listOfServiceSelected: List<Service> = emptyList(),
+    val listOfServiceSelected: List<com.malek.domain.models.Service> = emptyList(),
     val locationMode: Boolean = false
 )
 
 private fun initialState(
     locationMode: Boolean = false,
-    listOfServiceSelected: List<Service> = emptyList(),
+    listOfServiceSelected: List<com.malek.domain.models.Service> = emptyList(),
 ): PublicToiletsListState =
     PublicToiletsListState(
         publicToiletsFetched = emptyList(),

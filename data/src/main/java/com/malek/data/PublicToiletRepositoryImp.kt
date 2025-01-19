@@ -1,16 +1,14 @@
-package com.malek.toiletesparis.data
+package com.malek.data
 
-import androidx.compose.ui.util.fastFirst
-import com.malek.toiletesparis.data.api.ParisDataApi
-import com.malek.toiletesparis.data.api.dto.Yes
-import com.malek.toiletesparis.data.api.dto.toPublicToilet
-import com.malek.toiletesparis.di.BackgroundDispatcher
-import com.malek.toiletesparis.domain.PublicToiletRepository
-import com.malek.toiletesparis.domain.Query
-import com.malek.toiletesparis.domain.models.PublicToilet
-import com.malek.toiletesparis.domain.models.PublicToiletListPageResult
-import com.malek.toiletesparis.domain.models.Service
-import com.malek.toiletesparis.utils.runSuspendCatching
+import com.malek.data.api.ParisDataApi
+import com.malek.data.api.dto.Yes
+import com.malek.data.api.dto.toPublicToilet
+import com.malek.domain.PublicToiletRepository
+import com.malek.domain.Query
+import com.malek.domain.models.PublicToiletListPageResult
+import com.malek.domain.models.Service
+import com.malek.utlis.BackgroundDispatcher
+import com.malek.utlis.runSuspendCatching
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

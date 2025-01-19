@@ -17,8 +17,8 @@ import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.unit.dp
 import com.malek.toiletesparis.R
-import com.malek.toiletesparis.domain.models.PublicToilet
-import com.malek.toiletesparis.domain.models.Service
+import com.malek.domain.models.PublicToilet
+import com.malek.domain.models.Service
 
 @Composable
 fun PublicToiletItemCompose(
@@ -61,8 +61,8 @@ fun PublicToiletItemCompose(
                 }
             }
             Spacer(modifier = Modifier.height(8.dp))
-            if (toilet.latLong != null) {
-                Button(onClick = { onNavigateClick(toilet.latLong, toilet.address) }) {
+            toilet.latLong?.let {
+                Button(onClick = { onNavigateClick(it, toilet.address) }) {
                     Text(text = stringResource(R.string.open_maps_cta))
                 }
             }
