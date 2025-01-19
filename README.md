@@ -1,7 +1,7 @@
 # PublicToiletsParis
 It is an Android application that provides a list of public toilets in Paris, with a user-friendly feature to filter toilets located near the user's current location.
 # Technical presentation 
-- Programming Language: Written entirely in <b>Kotlin</b> with <b>coroutines and <b>flow</b> .
+- Programming Language: Written entirely in <b>Kotlin</b> with <b>coroutines</b> and <b>flow</b> .
 - UI Framework: Built using <b>Jetpack Compose</b> with Material Design 3 for a modern, declarative, and accessible user interface.
 - Dependency Injection: Managed with <b>Hilt</b> , a purpose-built DI library for Android .
 - Networking: Handled by <b>Retrofit</b> and <b>OkHttp</b>, offering reliable and efficient API communication.
