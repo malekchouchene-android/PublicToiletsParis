@@ -49,7 +49,7 @@ class PublicToiletsListViewModel @Inject constructor(
                     if (localQuery.firstIndex == 0) {
                         initialState(
                             locationMode = localQuery.latLong != null,
-                            listOfServiceSelected = localQuery.services,
+                            listOfServiceSelected = localQuery.services
                         )
                     } else {
                         it.copy(
@@ -119,7 +119,6 @@ class PublicToiletsListViewModel @Inject constructor(
             _state.update {
                 it.copy(
                     currentLocationFetching = false,
-                    currentLocationRefused = false
                 )
             }
             if (query.value.latLong != latLong) {
@@ -129,18 +128,6 @@ class PublicToiletsListViewModel @Inject constructor(
                         firstIndex = 0,
                     )
                 }
-            }
-        }
-    }
-
-    fun updateCurrentLocationRefused() {
-        viewModelScope.launch {
-            _state.update {
-                it.copy(
-                    currentLocationRefused = true,
-                    currentLocationFetching = false,
-                    locationMode = false
-                )
             }
         }
     }
@@ -188,7 +175,6 @@ data class PublicToiletsListState(
     val endReached: Boolean,
     val totalFetched: Int,
     val currentLocationFetching: Boolean = false,
-    val currentLocationRefused: Boolean? = null,
     val listOfServiceSelected: List<Service> = emptyList(),
     val locationMode: Boolean = false
 )
@@ -204,5 +190,5 @@ private fun initialState(
         totalFetched = 0,
         endReached = false,
         locationMode = locationMode,
-        listOfServiceSelected = listOfServiceSelected
+        listOfServiceSelected = listOfServiceSelected,
     )

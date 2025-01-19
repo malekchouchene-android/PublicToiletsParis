@@ -71,7 +71,9 @@ class PublicToiletsListActivity : ComponentActivity() {
             }
 
             else -> {
-                viewModel.updateCurrentLocationRefused()
+                viewModel.onCurrentLocationFetched(
+                    latLong = null,
+                )
             }
         }
 
@@ -135,25 +137,22 @@ class PublicToiletsListActivity : ComponentActivity() {
                         )
                     },
                     floatingActionButton = {
-                        if (state.currentLocationRefused == null || state.currentLocationRefused == false) {
-                            FloatingActionButton(
-                                onClick = {
-                                    if (!state.currentLocationFetching) {
-                                        getCurrentLocalisation()
-                                    }
-                                },
-                            ) {
+                        FloatingActionButton(
+                            onClick = {
                                 if (!state.currentLocationFetching) {
-                                    Icon(
-                                        Icons.Filled.LocationOn,
-                                        contentDescription = "filter par localisation"
-                                    )
-                                } else {
-                                    CircularProgressIndicator()
+                                    getCurrentLocalisation()
                                 }
+                            },
+                        ) {
+                            if (!state.currentLocationFetching) {
+                                Icon(
+                                    Icons.Filled.LocationOn,
+                                    contentDescription = "filter par localisation"
+                                )
+                            } else {
+                                CircularProgressIndicator()
                             }
                         }
-
                     },
                 ) { innerPadding ->
                     Surface(
@@ -227,7 +226,7 @@ class PublicToiletsListActivity : ComponentActivity() {
         if (ActivityCompat.checkSelfPermission(
                 this,
                 Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+            ) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(
                 this,
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
@@ -240,6 +239,7 @@ class PublicToiletsListActivity : ComponentActivity() {
             viewModel.onCurrentLocationFetched(latLong = null)
         }
     }
+
 }
 
 

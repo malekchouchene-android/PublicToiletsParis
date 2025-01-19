@@ -12,7 +12,6 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
@@ -362,7 +361,6 @@ class PublicToiletsListViewModelTest {
                 val resultState2 = awaitItem()
                 advanceUntilIdle()
                 Truth.assertThat(resultState2.currentLocationFetching).isFalse()
-                Truth.assertThat(resultState2.currentLocationRefused).isFalse()
                 Truth.assertThat(resultState2.isLoading).isFalse()
                 val loadingState = awaitItem()
                 advanceUntilIdle()
@@ -582,42 +580,5 @@ class PublicToiletsListViewModelTest {
                 Truth.assertThat(resultState2.endReached).isTrue()
             }
         }
-    }
-
-    @Test
-    fun should_handle_permission_refused() {
-        runTest {
-            val useCase = mockk<GetPublicToiletsUseCase>()
-            val viewModel = PublicToiletsListViewModel(
-                useCase = useCase,
-                backgroundDispatcher = testDispatcher
-            )
-            coEvery {
-                useCase.getPublicToiletsByQuery(
-                    query = Query(
-                        firstIndex = 0,
-                        latLong = null,
-                        services = emptyList(),
-                    )
-                )
-            }.returns(
-                Result.success(
-                    PublicToiletListPageResult(
-                        totalNumber = 1,
-                        pageSize = 1,
-                        result = emptyList()
-                    )
-                )
-            )
-            viewModel.state.mapNotNull { it.currentLocationRefused }.test {
-                viewModel.updateCurrentLocationRefused()
-                val resultState = awaitItem()
-                advanceUntilIdle()
-                Truth.assertThat(resultState).isTrue()
-                Truth.assertThat(viewModel.state.value.locationMode).isFalse()
-                Truth.assertThat(viewModel.state.value.currentLocationFetching).isFalse()
-            }
-        }
-
     }
 }
