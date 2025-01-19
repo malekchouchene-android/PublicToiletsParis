@@ -2,11 +2,11 @@ package com.malek.toiletesparis.ui.list
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth
-import com.malek.domain.GetPublicToiletsUseCase
-import com.malek.domain.Query
-import com.malek.domain.models.PublicToilet
-import com.malek.domain.models.PublicToiletListPageResult
-import com.malek.domain.models.Service
+import com.malek.toiletparis.domain.GetPublicToiletsUseCase
+import com.malek.toiletparis.domain.Query
+import com.malek.toiletparis.domain.models.PublicToilet
+import com.malek.toiletparis.domain.models.PublicToiletListPageResult
+import com.malek.toiletparis.domain.models.Service
 import com.malek.testingutlis.CoroutinesTestRule
 import io.mockk.coEvery
 import io.mockk.coVerify

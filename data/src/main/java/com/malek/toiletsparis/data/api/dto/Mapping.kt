@@ -1,7 +1,7 @@
-package com.malek.data.api.dto
+package com.malek.toiletsparis.data.api.dto
 
-import com.malek.domain.models.PublicToilet
-import com.malek.domain.models.Service
+import com.malek.toiletparis.domain.models.PublicToilet
+import com.malek.toiletparis.domain.models.Service
 
 fun RecordDto.toPublicToilet(): PublicToilet? {
     return if (this.recordId == null || this.fields?.adresse == null) {

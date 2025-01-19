@@ -1,11 +1,11 @@
 package com.malek.data
 
 import com.google.common.truth.Truth
-import com.malek.data.api.dto.FieldsDto
-import com.malek.data.api.dto.RecordDto
-import com.malek.data.api.dto.toPublicToilet
-import com.malek.domain.models.PublicToilet
-import com.malek.domain.models.Service
+import com.malek.toiletsparis.data.api.dto.FieldsDto
+import com.malek.toiletsparis.data.api.dto.RecordDto
+import com.malek.toiletsparis.data.api.dto.toPublicToilet
+import com.malek.toiletparis.domain.models.PublicToilet
+import com.malek.toiletparis.domain.models.Service
 import org.junit.Test
 
 class MappingKtTest {

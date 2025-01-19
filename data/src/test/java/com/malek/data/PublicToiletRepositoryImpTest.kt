@@ -2,13 +2,14 @@ package com.malek.data
 
 import com.google.common.truth.Truth
 import com.google.common.truth.Truth.assertThat
-import com.malek.data.api.ParisDataApi
-import com.malek.data.api.dto.FieldsDto
-import com.malek.data.api.dto.ParisDataDto
-import com.malek.data.api.dto.RecordDto
-import com.malek.domain.Query
-import com.malek.domain.models.Service
+import com.malek.toiletsparis.data.api.ParisDataApi
+import com.malek.toiletsparis.data.api.dto.FieldsDto
+import com.malek.toiletsparis.data.api.dto.ParisDataDto
+import com.malek.toiletsparis.data.api.dto.RecordDto
+import com.malek.toiletparis.domain.Query
+import com.malek.toiletparis.domain.models.Service
 import com.malek.testingutlis.CoroutinesTestRule
+import com.malek.toiletsparis.data.PublicToiletRepositoryImp
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk

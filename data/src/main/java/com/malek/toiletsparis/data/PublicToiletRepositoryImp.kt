@@ -1,12 +1,12 @@
-package com.malek.data
+package com.malek.toiletsparis.data
 
-import com.malek.data.api.ParisDataApi
-import com.malek.data.api.dto.Yes
-import com.malek.data.api.dto.toPublicToilet
-import com.malek.domain.PublicToiletRepository
-import com.malek.domain.Query
-import com.malek.domain.models.PublicToiletListPageResult
-import com.malek.domain.models.Service
+import com.malek.toiletsparis.data.api.ParisDataApi
+import com.malek.toiletsparis.data.api.dto.Yes
+import com.malek.toiletsparis.data.api.dto.toPublicToilet
+import com.malek.toiletparis.domain.PublicToiletRepository
+import com.malek.toiletparis.domain.Query
+import com.malek.toiletparis.domain.models.PublicToiletListPageResult
+import com.malek.toiletparis.domain.models.Service
 import com.malek.utlis.BackgroundDispatcher
 import com.malek.utlis.runSuspendCatching
 import kotlinx.coroutines.CoroutineDispatcher

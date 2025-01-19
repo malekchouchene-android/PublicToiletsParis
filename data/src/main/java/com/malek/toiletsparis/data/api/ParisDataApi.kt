@@ -1,6 +1,6 @@
-package com.malek.data.api
+package com.malek.toiletsparis.data.api
 
-import com.malek.data.api.dto.ParisDataDto
+import com.malek.toiletsparis.data.api.dto.ParisDataDto
 import retrofit2.http.GET
 import retrofit2.http.Query
 

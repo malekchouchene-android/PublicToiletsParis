@@ -14,7 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.malek.domain.models.PublicToilet
+import com.malek.toiletparis.domain.models.PublicToilet
 import com.malek.toiletesparis.ui.shared.ErrorState
 import com.malek.toiletesparis.utils.OnBottomReached
 

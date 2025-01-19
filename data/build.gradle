@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace 'com.malek.data'
+    namespace 'com.malek.toiletparis.data'
     compileSdk 35
 
     defaultConfig {

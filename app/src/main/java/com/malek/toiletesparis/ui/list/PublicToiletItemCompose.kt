@@ -17,8 +17,8 @@ import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.unit.dp
 import com.malek.toiletesparis.R
-import com.malek.domain.models.PublicToilet
-import com.malek.domain.models.Service
+import com.malek.toiletparis.domain.models.PublicToilet
+import com.malek.toiletparis.domain.models.Service
 
 @Composable
 fun PublicToiletItemCompose(

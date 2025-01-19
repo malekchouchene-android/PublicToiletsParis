@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">PublicToiletsParis</string>
-    <string name="baby_rely_message">Équipement bébé</string>
-    <string name="prm_access_message">Accessible handicapé</string>
+    <string name="baby_rely_message">Relais bébé</string>
+    <string name="prm_access_message">Accès handicapé</string>
     <string name="address_public_toilet">Adresse : %1$s</string>
     <string name="services_title">Services :</string>
     <string name="open_maps_cta">Voir sur la carte</string>
@@ -11,4 +11,6 @@
     <string name="open_hours_unavailable">Non spécifié</string>
     <string name="error_message">Une erreur est survenue</string>
     <string name="retry">Réessayer</string>
+    <string name="app_bar_title">Paris Toilets</string>
+    <string name="content_description_localisation_cta">filter par localisation</string>
 </resources>

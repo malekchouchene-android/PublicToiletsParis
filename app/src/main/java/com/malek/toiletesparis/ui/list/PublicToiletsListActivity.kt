@@ -43,7 +43,7 @@ import androidx.core.app.ActivityCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.malek.domain.models.Service
+import com.malek.toiletparis.domain.models.Service
 import com.malek.toiletesparis.R
 import com.malek.toiletesparis.ui.shared.EmptyState
 import com.malek.toiletesparis.ui.shared.ErrorState
@@ -100,7 +100,7 @@ class PublicToiletsListActivity : ComponentActivity() {
                             title = {
                                 Column(modifier = Modifier.fillMaxWidth()) {
                                     Text(
-                                        "Paris Toiltes"
+                                        stringResource(R.string.app_bar_title)
                                     )
                                     Row(
                                         Modifier
@@ -146,7 +146,9 @@ class PublicToiletsListActivity : ComponentActivity() {
                             if (!state.currentLocationFetching) {
                                 Icon(
                                     Icons.Filled.LocationOn,
-                                    contentDescription = "filter par localisation"
+                                    contentDescription = stringResource(
+                                        R.string.content_description_localisation_cta
+                                    )
                                 )
                             } else {
                                 CircularProgressIndicator()

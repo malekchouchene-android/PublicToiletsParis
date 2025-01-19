@@ -2,10 +2,10 @@ package com.malek.toiletesparis.ui.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.malek.domain.GetPublicToiletsUseCase
-import com.malek.domain.Query
-import com.malek.domain.models.PublicToilet
-import com.malek.domain.models.Service
+import com.malek.toiletparis.domain.GetPublicToiletsUseCase
+import com.malek.toiletparis.domain.Query
+import com.malek.toiletparis.domain.models.PublicToilet
+import com.malek.toiletparis.domain.models.Service
 import com.malek.utlis.BackgroundDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher

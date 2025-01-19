@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace 'com.malek.domain'
+    namespace 'com.malek.toiletparis.domain'
     compileSdk 35
 
     defaultConfig {

@@ -1,6 +1,6 @@
-package com.malek.domain
+package com.malek.toiletparis.domain
 
-import com.malek.domain.models.PublicToiletListPageResult
+import com.malek.toiletparis.domain.models.PublicToiletListPageResult
 import javax.inject.Inject
 
 

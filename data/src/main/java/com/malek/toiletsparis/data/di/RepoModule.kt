@@ -1,7 +1,7 @@
-package com.malek.data.di
+package com.malek.toiletsparis.data.di
 
-import com.malek.data.PublicToiletRepositoryImp
-import com.malek.domain.PublicToiletRepository
+import com.malek.toiletsparis.data.PublicToiletRepositoryImp
+import com.malek.toiletparis.domain.PublicToiletRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

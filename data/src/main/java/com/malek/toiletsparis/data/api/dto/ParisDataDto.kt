@@ -1,4 +1,4 @@
-package com.malek.data.api.dto
+package com.malek.toiletsparis.data.api.dto
 
 import com.google.gson.annotations.SerializedName
 

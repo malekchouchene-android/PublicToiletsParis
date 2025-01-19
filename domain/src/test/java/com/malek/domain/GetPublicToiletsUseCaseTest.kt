@@ -1,9 +1,12 @@
 package com.malek.domain
 
 import com.google.common.truth.Truth
-import com.malek.domain.models.PublicToilet
-import com.malek.domain.models.PublicToiletListPageResult
+import com.malek.toiletparis.domain.models.PublicToilet
+import com.malek.toiletparis.domain.models.PublicToiletListPageResult
 import com.malek.testingutlis.CoroutinesTestRule
+import com.malek.toiletparis.domain.GetPublicToiletsUseCase
+import com.malek.toiletparis.domain.PublicToiletRepository
+import com.malek.toiletparis.domain.Query
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
