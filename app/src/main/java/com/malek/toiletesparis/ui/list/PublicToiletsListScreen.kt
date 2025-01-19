@@ -33,7 +33,7 @@ fun PublicToiletsListScreen(
         modifier = modifier,
         state = lazyListState,
         verticalArrangement = Arrangement.spacedBy(16.dp),
-        contentPadding = PaddingValues(8.dp)
+        contentPadding = PaddingValues(top = 16.dp, start = 8.dp, end = 8.dp)
     ) {
         items(
             publicToiletsFetched,
