@@ -34,7 +34,6 @@ class PublicToiletRepositoryImp @Inject constructor(
                 PublicToiletListPageResult(
                     totalNumber = parisDataDto.total,
                     pageSize = parisDataDto.records.size,
-                    firstIndex = query.firstIndex,
                     result = parisDataDto.records.mapNotNull {
                         it.toPublicToilet()
                     }

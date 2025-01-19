@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.malek.domain.GetPublicToiletsUseCase
 import com.malek.domain.Query
+import com.malek.domain.models.PublicToilet
+import com.malek.domain.models.Service
 import com.malek.utlis.BackgroundDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -131,19 +133,20 @@ class PublicToiletsListViewModel @Inject constructor(
         }
     }
 
-    fun updateCurrentLocationRefused(currentLocationRefused: Boolean) {
+    fun updateCurrentLocationRefused() {
         viewModelScope.launch {
             _state.update {
                 it.copy(
-                    currentLocationRefused = currentLocationRefused,
-                    currentLocationFetching = false
+                    currentLocationRefused = true,
+                    currentLocationFetching = false,
+                    locationMode = false
                 )
             }
         }
     }
 
 
-    fun toggleService(service: com.malek.domain.models.Service) {
+    fun toggleService(service: Service) {
         viewModelScope.launch(backgroundDispatcher) {
             val serviceSelected = state.value.listOfServiceSelected.toMutableList()
             if (serviceSelected.any { it == service }) {
@@ -179,20 +182,20 @@ class PublicToiletsListViewModel @Inject constructor(
 
 
 data class PublicToiletsListState(
-    val publicToiletsFetched: List<com.malek.domain.models.PublicToilet>,
+    val publicToiletsFetched: List<PublicToilet>,
     val isLoading: Boolean,
     val error: Throwable?,
     val endReached: Boolean,
     val totalFetched: Int,
     val currentLocationFetching: Boolean = false,
     val currentLocationRefused: Boolean? = null,
-    val listOfServiceSelected: List<com.malek.domain.models.Service> = emptyList(),
+    val listOfServiceSelected: List<Service> = emptyList(),
     val locationMode: Boolean = false
 )
 
 private fun initialState(
     locationMode: Boolean = false,
-    listOfServiceSelected: List<com.malek.domain.models.Service> = emptyList(),
+    listOfServiceSelected: List<Service> = emptyList(),
 ): PublicToiletsListState =
     PublicToiletsListState(
         publicToiletsFetched = emptyList(),

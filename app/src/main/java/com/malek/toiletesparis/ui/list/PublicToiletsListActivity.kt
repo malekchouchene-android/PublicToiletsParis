@@ -43,6 +43,7 @@ import androidx.core.app.ActivityCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.malek.domain.models.Service
 import com.malek.toiletesparis.R
 import com.malek.toiletesparis.ui.shared.EmptyState
 import com.malek.toiletesparis.ui.shared.ErrorState
@@ -70,7 +71,7 @@ class PublicToiletsListActivity : ComponentActivity() {
             }
 
             else -> {
-                viewModel.updateCurrentLocationRefused(currentLocationRefused = true)
+                viewModel.updateCurrentLocationRefused()
             }
         }
 
@@ -114,7 +115,7 @@ class PublicToiletsListActivity : ComponentActivity() {
                                                 viewModel.resetLocation()
                                             })
                                         }
-                                        for (service in com.malek.domain.models.Service.entries) {
+                                        for (service in Service.entries) {
                                             FilterChip(
                                                 selected = service in state.listOfServiceSelected,
                                                 label = {
@@ -199,7 +200,10 @@ class PublicToiletsListActivity : ComponentActivity() {
 
     private fun openMaps(latLong: Pair<Double, Double>, label: String) {
         val uri =
-            Uri.parse("geo:${latLong.first},${latLong.second}?q=${latLong.first},${latLong.second}(${label})")
+            Uri.parse(
+                "geo:${latLong.first},${latLong.second}?q=${latLong.first}," +
+                        "${latLong.second}(${label})"
+            )
 
         val intent = Intent(Intent.ACTION_VIEW, uri)
         try {
@@ -240,9 +244,9 @@ class PublicToiletsListActivity : ComponentActivity() {
 
 
 @StringRes
-fun com.malek.domain.models.Service.getLabel(): Int {
+fun Service.getLabel(): Int {
     return when (this) {
-        com.malek.domain.models.Service.BABY_RELY -> R.string.baby_rely_message
-        com.malek.domain.models.Service.PRM_ACCESS -> R.string.prm_access_message
+        Service.BABY_RELY -> R.string.baby_rely_message
+        Service.PRM_ACCESS -> R.string.prm_access_message
     }
 }

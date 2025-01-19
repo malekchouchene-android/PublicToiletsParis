@@ -28,6 +28,8 @@ class GetPublicToiletsUseCaseTest {
             // given
             val repository: PublicToiletRepository = mockk()
             val expectedRes = PublicToiletListPageResult(
+                totalNumber = 1,
+                pageSize = 1,
                 result = listOf(
                     PublicToilet(
                         id = "test",
@@ -37,10 +39,7 @@ class GetPublicToiletsUseCaseTest {
                         servicesAvailable = emptyList(),
                         equipmentInfoUrl = null
                     )
-                ),
-                firstIndex = 0,
-                totalNumber = 1,
-                pageSize = 1
+                )
             )
             coEvery {
                 repository.getPublicToilets(Query())

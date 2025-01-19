@@ -11,7 +11,6 @@ data class PublicToilet(
 
 data class PublicToiletListPageResult(
     val totalNumber: Int,
-    val firstIndex: Int,
     val pageSize: Int,
     val result: List<PublicToilet>,
 )
