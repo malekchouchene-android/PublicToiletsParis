@@ -39,7 +39,8 @@ dependencies {
 
     implementation project(':domain')
     implementation project(':utlis')
-    testImplementation libs.junit
+    testImplementation project(':testingutlis')
+
     androidTestImplementation libs.androidx.junit
     androidTestImplementation libs.androidx.espresso.core
     //hilt
@@ -58,4 +59,11 @@ dependencies {
     implementation(platform(libs.okhttp.bom))
     implementation(libs.okhttp3.okhttp)
     implementation(libs.okhttp3.logging.interceptor)
+    testImplementation libs.kotlinx.coroutines.test
+    testImplementation libs.mockk
+    testImplementation libs.truth
+    testImplementation project(':testingutlis')
+    testImplementation libs.junit
+
+
 }

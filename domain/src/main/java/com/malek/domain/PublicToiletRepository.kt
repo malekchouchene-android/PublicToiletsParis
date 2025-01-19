@@ -14,5 +14,5 @@ data class Query(
     val latLong: Pair<Double, Double>? = null,
     val firstIndex: Int = 0,
     val distance: Int = 1000,
-    val services : List<Service> = emptyList(),
+    val services: List<Service> = emptyList(),
 )
